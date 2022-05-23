@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { evaluate } from "mathjs";
+import './Style.css';
 
 function App() {
+  const [display, setDisplay] = useState("");
+  const operands = ["7","8","9","C","4","5","6","-","1","2","3","+","/","0","*","="];
+
+  const onClick = (digit) => {
+      if(digit === "="){
+        setDisplay(evaluate)
+      } else if(digit === "C"){
+          setDisplay("")
+      } else {
+          setDisplay(display + digit)
+      }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{display}</h1>
+      <div className="buttonWrap">{operands.map((button, index) => {
+            return (
+              <button className={`button-${button}`} onClick={() => onClick(button)} key={index}>{button}</button>
+            )
+          })
+        }
+      </div>
     </div>
   );
 }
